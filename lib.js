@@ -33,7 +33,16 @@ const writeToDestFile = (contents, fileName) => {
     });
 };
 
-const getIdentifier = (identifier)=> identifier.replace(/^(CHK)|(CP)/,"");
+const getIdentifier = (identifier) => convertSlashID(identifier.replace(/^(CHK)|(CP)/, ""));
+
+const convertSlashID = (identifier) => {
+    const regex = new RegExp("^([0-9]{2})999/([0-9]+)$")
+    if (regex.test(identifier)) {
+        const res = regex.exec(identifier)
+        return res[1] + (1000 + parseInt(res[2]))
+    }
+    return identifier
+}
 
 const getTestName = (testName, value, defaultTestName) => !!value ? testName : defaultTestName;
 
@@ -42,3 +51,4 @@ const getDate = (dateString) => {
 };
 
 module.exports = {getDestFileName, convertCSVToJSON, getDate, writeToDestFile, getTestName, getIdentifier};
+

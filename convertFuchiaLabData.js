@@ -59,7 +59,8 @@ const writeAsCSV = function (lines, destFileName) { //Need to make it generic
             lib.getTestName("CD4 % (enfants de - 5 ans)", line["CD4 %"]), line["CD4 %"],
             lib.getTestName("Charge Virale HIV - Value", line["Viral Load"]), line["Viral Load"],
             lib.getTestName("Protéines", proteinValue), proteinValue
-        ].join(",");
+        ].map(el => el ? el.split(',').join('.') : "")
+         .join(",");
     });
     contents.unshift(["Registration Number", "Date", "Visit Type",
         "Test", "Result",
